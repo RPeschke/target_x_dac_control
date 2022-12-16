@@ -20,7 +20,7 @@ port (
     addrb  : in  std_logic_vector(ADDR-1 downto 0) := (others => '0');
     doutb  : out std_logic_vector(DATA-1 downto 0) := (others => '0')
 );
-end bram_sdp_cc;
+end entity;
  
 architecture read_first of bram_sdp_cc is
     -- Shared memory
@@ -38,7 +38,7 @@ begin
     end if;
 end process;
  
-end read_first;
+end architecture;
 ------------------------------------------------------------------------
 
 ------------------------------------------------------------------------
@@ -64,7 +64,7 @@ port (
     addrb  : in  std_logic_vector(ADDR-1 downto 0);
     doutb  : out std_logic_vector(DATA-1 downto 0)
 );
-end bram_sdp;
+end entity;
  
 architecture rtl of bram_sdp is
     -- Shared memory
@@ -88,7 +88,7 @@ begin
     end if;
 end process;
  
-end rtl;
+end architecture;
 ------------------------------------------------------------------------
 
 
@@ -118,7 +118,7 @@ port(
    counter : out std_logic_vector(DEPTH-1 downto 0) := (others => '0')
 
 );
-end fifo_cc;
+end entity;
 
 architecture fifo_cc_arch of fifo_cc is
    
@@ -214,24 +214,10 @@ begin
          end if;
       end if;
    end process RW_ADDR_PROC;
-   ----
 
-  -- synthesis translate_off
-  --process (clk) is
-  --begin
-    --if rising_edge(clk) then
-      --if wen = '1' and i_full = '1' then
-        --report "ERROR:: trying to write full FIFO" severity failure;
-      --end if;
- 
-      --if ren = '1' and i_empty = '1' then
-        --report "ERROR:: trying to read empty FIFO" severity failure;
-      --end if;
-    --end if;
-  --end process;
-  -- synthesis translate_on
 
-end fifo_cc_arch;
+
+end architecture;
 ------------------------------------------------------------------------
 
 

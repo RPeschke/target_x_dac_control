@@ -1,10 +1,6 @@
 library ieee;
   use ieee.std_logic_1164.all;
-  use ieee.std_logic_unsigned.all;
-------------------------------------------------------------------------
----- AXI FIFO with common clock
-------------------------------------------------------------------------
-
+ 
   use work.xgen_axistream_32.all;
 
 

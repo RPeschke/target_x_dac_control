@@ -1,16 +1,6 @@
-Library work;
-  use work.all;
-
-Library ieee;
-  use ieee.std_logic_1164.all;
-  use ieee.std_logic_unsigned.all;
-
-  use ieee.std_logic_unsigned.all;
 library IEEE;
   use IEEE.STD_LOGIC_1164.all;
   use ieee.numeric_std.all;
-
-
 
 
   use work.xgen_axistream_32.all;
@@ -129,7 +119,7 @@ begin
           end if;
         when waiting => 
 
-          counter := counter +1;
+          counter := std_logic_vector(unsigned( counter) +1);
           if counter >= counter_max then
             state <= idle;
             counter := x"0000";

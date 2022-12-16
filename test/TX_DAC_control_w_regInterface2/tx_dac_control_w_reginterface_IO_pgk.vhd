@@ -9,12 +9,13 @@ use work.CSV_UtilityPkg.all;
 -- Start Include user packages --
 use work.roling_register_p.all;
 use work.xgen_axistream_32.all;
-use work.xgen_klm_scrod_bus.all;
+use work.TX_DAC_control_pack.all;
 
 -- End Include user packages --
 
 package tx_dac_control_w_reginterface_IO_pgk is
 
+  constant asicnumber : integer := 0;
 
 type tx_dac_control_w_reginterface_writer_rec is record
     clk : std_logic;  

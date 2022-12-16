@@ -24,7 +24,7 @@ end entity;
 
 architecture Behavioral of tx_dac_control_w_reginterface_reader_et is 
 
-  constant  NUM_COL    : integer := 5;
+  constant  NUM_COL    : integer := 4;
   signal    csv_r_data : c_integer_array(NUM_COL -1 downto 0)  := (others=>0)  ;
 begin
 
@@ -42,7 +42,6 @@ begin
   csv_from_integer(csv_r_data(1), data.rst);
   csv_from_integer(csv_r_data(2), data.reg.address);
   csv_from_integer(csv_r_data(3), data.reg.value);
-  csv_from_integer(csv_r_data(4), data.reg.new_value);
 
 
 end architecture;
@@ -70,14 +69,14 @@ entity tx_dac_control_w_reginterface_writer_et  is
 end entity;
 
 architecture Behavioral of tx_dac_control_w_reginterface_writer_et is 
-  constant  NUM_COL : integer := 10;
+  constant  NUM_COL : integer := 9;
   signal data_int   : c_integer_array(NUM_COL - 1 downto 0)  := (others=>0);
 begin
 
     csv_w : entity  work.csv_write_file 
         generic map (
             FileName => FileName,
-            HeaderLines=> "clk, rst, reg_address, reg_value, reg_new_value, tx_dac_control_out_sclk, tx_dac_control_out_reg_clr, tx_dac_control_out_sin, tx_dac_control_out_pclk",
+            HeaderLines=> "clk, rst, reg_address, reg_value, tx_dac_control_out_sclk, tx_dac_control_out_reg_clr, tx_dac_control_out_sin, tx_dac_control_out_pclk",
             NUM_COL =>   NUM_COL 
         ) port map(
             clk => clk, 
@@ -89,11 +88,10 @@ begin
   csv_to_integer(data.rst, data_int(1) );
   csv_to_integer(data.reg.address, data_int(2) );
   csv_to_integer(data.reg.value, data_int(3) );
-  csv_to_integer(data.reg.new_value, data_int(4) );
-  csv_to_integer(data.tx_dac_control_out.sclk, data_int(5) );
-  csv_to_integer(data.tx_dac_control_out.reg_clr, data_int(6) );
-  csv_to_integer(data.tx_dac_control_out.sin, data_int(7) );
-  csv_to_integer(data.tx_dac_control_out.pclk, data_int(8) );
+  csv_to_integer(data.tx_dac_control_out.sclk, data_int(4) );
+  csv_to_integer(data.tx_dac_control_out.reg_clr, data_int(5) );
+  csv_to_integer(data.tx_dac_control_out.sin, data_int(6) );
+  csv_to_integer(data.tx_dac_control_out.pclk, data_int(7) );
 
 
 end Behavioral;
@@ -141,7 +139,8 @@ begin
   data_out.reg <= data_in.reg;
 
 
-DUT :  entity work.tx_dac_control_w_reginterface  port map(
+DUT :  entity work.tx_dac_control_w_reginterface   generic map(
+asicnumber => asicnumber  ) port map(
 
   clk => clk,
     rst => data_out.rst,

@@ -1,16 +1,11 @@
 library IEEE;
   use IEEE.std_logic_1164.all;
+  use IEEE.std_logic_misc.all;
   use IEEE.numeric_std.all;
-  use IEEE.std_logic_1164.all;
-  use IEEE.numeric_std.all;
-  use ieee.std_logic_unsigned.all;
-
   use work.roling_register_p.all;
-
-  
   use work.xgen_axistream_32.all;
-  
-  use work.xgen_klm_scrod_bus.all;
+  use work.TX_DAC_control_pack.all;
+
 
 entity TX_DAC_control_w_regInterface is
   generic ( 
@@ -19,6 +14,8 @@ entity TX_DAC_control_w_regInterface is
   port (
     clk : std_logic;
     rst : std_logic;
+
+
     reg : registerT;
 
 
@@ -63,9 +60,9 @@ begin
     if rising_edge(clk) then 
       pull(regTx, reg_data_s2m);
 			  TargetAsic :=  to_integer(unsigned(i_reg.address(15 downto 7)));
-        if (TargetAsic = asicNumber + 1 or TargetAsic = 0) and i_reg.new_value = '1' Then 
+        if (TargetAsic = asicNumber + 1 or TargetAsic = 0)  and or_reduce(i_reg.address(6 downto 0)) = '1'  Then 
             REG_DATA := (others => '0');
-            REG_DATA(18 downto 12) := i_reg.address(6 downto 0);
+            REG_DATA(18 downto 12) := std_logic_vector(unsigned( i_reg.address(6 downto 0)) - 1);
             REG_DATA(11 downto 0)  := i_reg.value(11 downto 0);
             send_data(regTX, REG_DATA);
 
